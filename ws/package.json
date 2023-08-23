@@ -1,0 +1,18 @@
+{
+	"name": "ws-be",
+	"version": "1.0.0",
+	"description": "",
+	"main": "ws-index.js",
+	"scripts": {
+		"start": "node ws-index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"ws"
+	],
+	"author": "Kawsar",
+	"license": "ISC",
+	"dependencies": {
+		"ws": "^8.13.0"
+	}
+}

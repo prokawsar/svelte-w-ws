@@ -1,31 +1,30 @@
-<script>
+<script lang="ts">
 	import Button from '$lib/elements/button.svelte';
 	import Count from '$lib/elements/count.svelte';
 	import { count } from '$lib/store/store';
+	import { onMount } from 'svelte';
 
-	const increaseCounter = () => {
-		$count++;
+	const ws_url = 'ws://localhost:8080';
+	let ws: WebSocket;
 
-		socket.emit('eventFromClient', $count);
-	};
-
-	import { io } from 'socket.io-client';
-
-	const socket = io();
-
-	socket.on('eventFromServer', (message) => {
-		console.log(message);
+	onMount(() => {
+		ws = new WebSocket(ws_url);
+		ws.onmessage = (event) => {
+			const data = JSON.parse(event.data);
+			if (data.type === 'count') {
+				$count = data.count;
+			}
+		};
 	});
 
-	$: {
-		// send message to server
-		socket.emit('eventFromClient', $count);
-	}
+	const incrementCounter = () => {
+		ws.send('increment');
+	};
 </script>
 
 <div class="container mx-auto mt-20 flex flex-col items-center gap-5 justify-center">
 	<div class="w-60 flex flex-col gap-5">
 		<Count />
-		<Button text="Click here" onClick={() => increaseCounter()} />
+		<Button text="Click here" onClick={() => incrementCounter()} />
 	</div>
 </div>
