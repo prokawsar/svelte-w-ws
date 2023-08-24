@@ -20,11 +20,15 @@
 	const incrementCounter = () => {
 		ws.send('increment');
 	};
+	const resetCounter = () => {
+		ws.send('reset');
+	};
 </script>
 
 <div class="container mx-auto mt-20 flex flex-col items-center gap-5 justify-center">
-	<div class="w-60 flex flex-col gap-5">
+	<div class="w-60 flex flex-col gap-5 items-center">
 		<Count />
-		<Button text="Click here" onClick={() => incrementCounter()} />
+		<Button classes="w-full" text="Increament" onClick={() => incrementCounter()} />
+		<Button classes="w-full outline-red-300" text="Reset" onClick={() => resetCounter()} />
 	</div>
 </div>
