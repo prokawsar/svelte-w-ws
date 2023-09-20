@@ -28,8 +28,5 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.4.2"
 	},
-	"dependencies": {
-		"@kinde-oss/kinde-sveltekit-sdk": "file:kinde-oss-kinde-sveltekit-sdk-1.2.0.tgz"
-	},
 	"type": "module"
 }
