@@ -27,7 +27,7 @@
 </script>
 
 <svelte:head>
-	<title>Svelte with Web Socket implemented</title>
+	<title>SvelteKit with Kinde Auth implemented</title>
 </svelte:head>
 
 <div class="container mx-auto mt-20 flex flex-col items-center gap-5 justify-center">
