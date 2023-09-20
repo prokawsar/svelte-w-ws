@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Button from '$lib/elements/button.svelte';
 	import Count from '$lib/elements/count.svelte';
 	import { count } from '$lib/store/store';
@@ -31,8 +32,20 @@
 
 <div class="container mx-auto mt-20 flex flex-col items-center gap-5 justify-center">
 	<div class="w-60 flex flex-col gap-5 items-center">
-		<Count />
+		<div class="flex flex-row gap-3">
+			<Button
+				classes="w-full outline-gray-300"
+				text="Login"
+				onClick={() => goto('/api/auth/login')}
+			/>
+			<Button
+				classes="w-full outline-green-300"
+				text="Register"
+				onClick={() => goto('/api/auth/register')}
+			/>
+		</div>
+		<!-- <Count />
 		<Button classes="w-full" text="Increament" onClick={() => incrementCounter()} />
-		<Button classes="w-full outline-red-300" text="Reset" onClick={() => resetCounter()} />
+		<Button classes="w-full outline-red-300" text="Reset" onClick={() => resetCounter()} /> -->
 	</div>
 </div>
