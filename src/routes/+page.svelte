@@ -25,6 +25,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Svelte with Web Socket implemented</title>
+</svelte:head>
+
 <div class="container mx-auto mt-20 flex flex-col items-center gap-5 justify-center">
 	<div class="w-60 flex flex-col gap-5 items-center">
 		<Count />
