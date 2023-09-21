@@ -10,6 +10,7 @@ export async function load({ request }: RequestEvent) {
 	if (isAuthenticated) {
 		// userProfile = await kindeAuthClient.getUser(request as unknown as SessionManager)
 		userProfile = await kindeAuthClient.getUserProfile(request as unknown as SessionManager)
+		const getOrganization = kindeAuthClient.getOrganization(request as unknown as SessionManager)
 		const userOrganizations = kindeAuthClient.getUserOrganizations(
 			request as unknown as SessionManager
 		)
@@ -17,6 +18,7 @@ export async function load({ request }: RequestEvent) {
 			request as unknown as SessionManager,
 			'read:profile'
 		)
+
 		const permissions = kindeAuthClient.getPermissions(request as unknown as SessionManager)
 		const aud = kindeAuthClient.getClaim(request as unknown as SessionManager, 'aud')
 
@@ -36,6 +38,7 @@ export async function load({ request }: RequestEvent) {
 
 			console.log({
 				userProfile,
+				getOrganization,
 				userOrganizations,
 				permission,
 				permissions,
