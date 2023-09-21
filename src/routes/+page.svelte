@@ -55,6 +55,13 @@
 				text="Register"
 				onClick={() => goto('/api/auth/register')}
 			/>
+			{#if data.isAuthenticated}
+				<Button
+					classes="w-full !outline-red-500"
+					text="Logout"
+					onClick={() => goto('/api/auth/logout')}
+				/>
+			{/if}
 		</div>
 		<!-- <Count />
 		<Button classes="w-full" text="Increament" onClick={() => incrementCounter()} />
