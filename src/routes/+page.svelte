@@ -38,10 +38,15 @@
 	</p>
 	<p class="text-sm text-gray-400">@kinde-oss/kinde-sveltekit-sdk v1.2.0</p>
 
-	<p class="font-bold text-3xl">
-		A<span class="uppercase text-lg">thenticated:</span>
-		<span class="uppercase font-light text-lg">{data.isAuthenticated}</span>
-	</p>
+	<div class="flex flex-row gap-3 items-center">
+		<span
+			class="h-5 w-5 rounded-full flex {data.isAuthenticated ? 'bg-green-400' : 'bg-gray-400'}"
+		/>
+		<p class="font-bold text-3xl">
+			A<span class="uppercase text-lg">thenticated:</span>
+			<span class="uppercase font-light text-lg">{data.isAuthenticated}</span>
+		</p>
+	</div>
 
 	<div class="w-60 flex flex-col gap-5 items-center">
 		<div class="flex flex-row gap-3 w-full justify-center">
