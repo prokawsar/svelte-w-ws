@@ -11,13 +11,13 @@
 	let ws: WebSocket
 
 	onMount(() => {
-		ws = new WebSocket(ws_url)
-		ws.onmessage = (event) => {
-			const data = JSON.parse(event.data)
-			if (data.type === 'count') {
-				$count = data.count
-			}
-		}
+		// ws = new WebSocket(ws_url)
+		// ws.onmessage = (event) => {
+		// 	const data = JSON.parse(event.data)
+		// 	if (data.type === 'count') {
+		// 		$count = data.count
+		// 	}
+		// }
 	})
 
 	const incrementCounter = () => {
@@ -39,8 +39,8 @@
 	<p class="text-sm text-gray-400">@kinde-oss/kinde-sveltekit-sdk v1.2.0</p>
 
 	<p class="font-bold text-3xl">
-		A<span class="uppercase text-lg">thenticated</span>
-		<span class="uppercase text-lg">{data.isAuthenticated}</span>
+		A<span class="uppercase text-lg">thenticated:</span>
+		<span class="uppercase font-light text-lg">{data.isAuthenticated}</span>
 	</p>
 
 	<div class="w-60 flex flex-col gap-5 items-center">
