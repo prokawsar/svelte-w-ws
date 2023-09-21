@@ -72,4 +72,9 @@
 		<Button classes="w-full" text="Increament" onClick={() => incrementCounter()} />
 		<Button classes="w-full outline-red-300" text="Reset" onClick={() => resetCounter()} /> -->
 	</div>
+	<div class="flex w-full flex-row justify-center">
+		<p>
+			{data.userProfile?.given_name || 'Name'} - {data.userProfile?.email || 'Email'}
+		</p>
+	</div>
 </div>
