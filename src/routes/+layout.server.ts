@@ -11,15 +11,16 @@ export async function load({ request }: RequestEvent) {
 		// userProfile = await kindeAuthClient.getUser(request as unknown as SessionManager)
 		userProfile = await kindeAuthClient.getUserProfile(request as unknown as SessionManager)
 		const getOrganization = kindeAuthClient.getOrganization(request as unknown as SessionManager)
-		const userOrganizations = kindeAuthClient.getUserOrganizations(
-			request as unknown as SessionManager
-		)
+		// const userOrganizations = kindeAuthClient.getUserOrganizations(
+		// 	request as unknown as SessionManager
+		// )
 		const permission = kindeAuthClient.getPermission(
 			request as unknown as SessionManager,
 			'read:profile'
 		)
 
 		const permissions = kindeAuthClient.getPermissions(request as unknown as SessionManager)
+		const getToken = kindeAuthClient.getToken(request as unknown as SessionManager)
 		const aud = kindeAuthClient.getClaim(request as unknown as SessionManager, 'aud')
 
 		try {
@@ -39,9 +40,10 @@ export async function load({ request }: RequestEvent) {
 			console.log({
 				userProfile,
 				getOrganization,
-				userOrganizations,
+				// userOrganizations,
 				permission,
 				permissions,
+				getToken,
 				aud,
 				theme
 				// enable_dark_theme,
