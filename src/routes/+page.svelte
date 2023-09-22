@@ -1,12 +1,22 @@
 <script lang="ts">
+	import { browser } from '$app/environment'
 	import { goto } from '$app/navigation'
 	import Button from '$lib/elements/button.svelte'
 	import Count from '$lib/elements/count.svelte'
 	import { count } from '$lib/store/store'
+	// import { createKindeBrowserClient } from '@kinde-oss/kinde-sveltekit-sdk'
 	import { onMount } from 'svelte'
 
 	export let data
-
+	let kb: any
+	if (browser) {
+		// kb = createKindeBrowserClient({
+		// 	redirectURL: 'http://localhost:5173',
+		// 	clientId: '',
+		// 	logoutRedirectURL: 'http://localhost:5173',
+		// 	authDomain: 'https://prokawsar.kinde.com'
+		// })
+	}
 	const ws_url = 'ws://localhost:8080'
 	let ws: WebSocket
 
@@ -20,12 +30,11 @@
 		// }
 	})
 
-	const incrementCounter = () => {
-		ws.send('increment')
-	}
-	const resetCounter = () => {
-		ws.send('reset')
-	}
+	// const loginWithOrgCode = async (org_code: string) => {
+	// 	await kb.login({
+	// 		org_code
+	// 	})
+	// }
 </script>
 
 <svelte:head>
@@ -48,7 +57,7 @@
 		</p>
 	</div>
 
-	<div class="w-60 flex flex-col gap-5 items-center">
+	<div class="flex flex-col gap-5 items-center w-2/4">
 		<div class="flex flex-row gap-3 w-full justify-center">
 			<Button
 				classes="w-full !outline-violet-600"
@@ -63,14 +72,23 @@
 			{#if data.isAuthenticated}
 				<Button
 					classes="w-full !outline-red-500"
+					text="Reg \w Create Org"
+					onClick={() => goto('/api/auth/create_org')}
+				/>
+				<Button
+					classes="w-full !outline-red-500"
 					text="Logout"
 					onClick={() => goto('/api/auth/logout')}
 				/>
 			{/if}
 		</div>
-		<!-- <Count />
-		<Button classes="w-full" text="Increament" onClick={() => incrementCounter()} />
-		<Button classes="w-full outline-red-300" text="Reset" onClick={() => resetCounter()} /> -->
+
+		<div class="flex flex-row gap-3 w-full justify-center">
+			{#if data.isAuthenticated}
+				<Button classes="w-full !outline-violet-600" text="Login \w org" />
+				<Button classes="w-full !outline-green-500" text="Register \w org" />
+			{/if}
+		</div>
 	</div>
 	<div class="flex w-full flex-row justify-center">
 		<p>
