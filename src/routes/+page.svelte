@@ -10,6 +10,8 @@
 	const ws_url = 'ws://localhost:8080'
 	let ws: WebSocket
 
+	//Can change 7 to 2 for longer results.
+	const org_name = (Math.random() + 1).toString(36).substring(7)
 	onMount(() => {
 		// ws = new WebSocket(ws_url)
 		// ws.onmessage = (event) => {
@@ -77,14 +79,19 @@
 		<div class="flex flex-row gap-3 w-full justify-center">
 			<Button
 				classes="w-full !outline-green-600"
+				text="Create org"
+				onClick={() => goto(`/api/auth/create_org?org_name=${org_name}`)}
+			/>
+			<Button
+				classes="w-full !outline-green-400"
 				text="Login \w org"
-				onClick={() => goto('/api/auth/login?org_code=org_fecc463496f4')}
+				onClick={() => goto('/api/auth/login?org_code=org_3c1bc91bc0f')}
 			/>
 			{#if data.isAuthenticated}
 				<Button
 					classes="w-full !outline-red-500"
 					text="Logout \w org"
-					onClick={() => goto('/api/auth/logout?org_code=org_fecc463496f4')}
+					onClick={() => goto('/api/auth/logout?org_code=org_3c1bc91bc0f')}
 				/>
 			{/if}
 		</div>

@@ -10,18 +10,20 @@ export async function load({ request }: RequestEvent) {
 	if (isAuthenticated) {
 		// userProfile = await kindeAuthClient.getUser(request as unknown as SessionManager)
 		userProfile = await kindeAuthClient.getUserProfile(request as unknown as SessionManager)
-		const getOrganization = kindeAuthClient.getOrganization(request as unknown as SessionManager)
-		const userOrganizations = kindeAuthClient.getUserOrganizations(
+		const getOrganization = await kindeAuthClient.getOrganization(
 			request as unknown as SessionManager
 		)
-		const permission = kindeAuthClient.getPermission(
+		const userOrganizations = await kindeAuthClient.getUserOrganizations(
+			request as unknown as SessionManager
+		)
+		const permission = await kindeAuthClient.getPermission(
 			request as unknown as SessionManager,
 			'read:profile'
 		)
 
-		const permissions = kindeAuthClient.getPermissions(request as unknown as SessionManager)
-		const getToken = kindeAuthClient.getToken(request as unknown as SessionManager)
-		const aud = kindeAuthClient.getClaim(request as unknown as SessionManager, 'aud')
+		const permissions = await kindeAuthClient.getPermissions(request as unknown as SessionManager)
+		const getToken = await kindeAuthClient.getToken(request as unknown as SessionManager)
+		const aud = await kindeAuthClient.getClaim(request as unknown as SessionManager, 'aud')
 
 		try {
 			const theme = await kindeAuthClient.getFlag(request as unknown as SessionManager, 'theme')
