@@ -4,19 +4,9 @@
 	import Button from '$lib/elements/button.svelte'
 	import Count from '$lib/elements/count.svelte'
 	import { count } from '$lib/store/store'
-	// import { createKindeBrowserClient } from '@kinde-oss/kinde-sveltekit-sdk'
 	import { onMount } from 'svelte'
 
 	export let data
-	let kb: any
-	if (browser) {
-		// kb = createKindeBrowserClient({
-		// 	redirectURL: 'http://localhost:5173',
-		// 	clientId: '',
-		// 	logoutRedirectURL: 'http://localhost:5173',
-		// 	authDomain: 'https://prokawsar.kinde.com'
-		// })
-	}
 	const ws_url = 'ws://localhost:8080'
 	let ws: WebSocket
 
@@ -59,39 +49,48 @@
 
 	<div class="flex flex-col gap-5 items-center w-2/4">
 		<div class="flex flex-row gap-3 w-full justify-center">
-			<Button
-				classes="w-full !outline-violet-600"
-				text="Login"
-				onClick={() => goto('/api/auth/login')}
-			/>
-			<Button
-				classes="w-full !outline-green-500"
-				text="Register"
-				onClick={() => goto('/api/auth/register')}
-			/>
 			{#if data.isAuthenticated}
 				<Button
-					classes="w-full !outline-red-500"
+					classes="w-full !outline-green-500"
 					text="Reg \w Create Org"
-					onClick={() => goto('/api/auth/create_org')}
+					onClick={() => goto('/api/auth/create_org?org_name="Create Test Org"')}
 				/>
 				<Button
 					classes="w-full !outline-red-500"
 					text="Logout"
 					onClick={() => goto('/api/auth/logout')}
 				/>
+			{:else}
+				<Button
+					classes="w-full !outline-violet-600"
+					text="Login"
+					onClick={() => goto('/api/auth/login')}
+				/>
+				<Button
+					classes="w-full !outline-green-500"
+					text="Register"
+					onClick={() => goto('/api/auth/register')}
+				/>
 			{/if}
 		</div>
 
 		<div class="flex flex-row gap-3 w-full justify-center">
+			<Button
+				classes="w-full !outline-green-600"
+				text="Login \w org"
+				onClick={() => goto('/api/auth/login?org_code=org_fecc463496f4')}
+			/>
 			{#if data.isAuthenticated}
-				<Button classes="w-full !outline-violet-600" text="Login \w org" />
-				<Button classes="w-full !outline-green-500" text="Register \w org" />
+				<Button
+					classes="w-full !outline-red-500"
+					text="Logout \w org"
+					onClick={() => goto('/api/auth/logout?org_code=org_fecc463496f4')}
+				/>
 			{/if}
 		</div>
 	</div>
 	<div class="flex w-full flex-row justify-center">
-		<p>
+		<p class="text-xl text-gray-500 uppercase my-5">
 			{data.userProfile?.given_name || 'Name'} - {data.userProfile?.email || 'Email'}
 		</p>
 	</div>

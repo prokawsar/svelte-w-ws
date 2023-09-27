@@ -11,9 +11,9 @@ export async function load({ request }: RequestEvent) {
 		// userProfile = await kindeAuthClient.getUser(request as unknown as SessionManager)
 		userProfile = await kindeAuthClient.getUserProfile(request as unknown as SessionManager)
 		const getOrganization = kindeAuthClient.getOrganization(request as unknown as SessionManager)
-		// const userOrganizations = kindeAuthClient.getUserOrganizations(
-		// 	request as unknown as SessionManager
-		// )
+		const userOrganizations = kindeAuthClient.getUserOrganizations(
+			request as unknown as SessionManager
+		)
 		const permission = kindeAuthClient.getPermission(
 			request as unknown as SessionManager,
 			'read:profile'
@@ -24,30 +24,27 @@ export async function load({ request }: RequestEvent) {
 		const aud = kindeAuthClient.getClaim(request as unknown as SessionManager, 'aud')
 
 		try {
-			const theme = await kindeAuthClient.getStringFlag(
+			const theme = await kindeAuthClient.getFlag(request as unknown as SessionManager, 'theme')
+			const enable_dark_theme = await kindeAuthClient.getBooleanFlag(
 				request as unknown as SessionManager,
-				'theme'
+				'is_dark_mode'
 			)
-			// const enable_dark_theme = await kindeAuthClient.getBooleanFlag(
-			// 	request as unknown as SessionManager,
-			// 	'enable_dark_theme'
-			// )
-			// const user_limit = await kindeAuthClient.getIntegerFlag(
-			// 	request as unknown as SessionManager,
-			// 	'user_limit'
-			// )
+			const user_limit = await kindeAuthClient.getIntegerFlag(
+				request as unknown as SessionManager,
+				'user_limit'
+			)
 
 			console.log({
 				userProfile,
 				getOrganization,
-				// userOrganizations,
+				userOrganizations,
 				permission,
 				permissions,
 				getToken,
 				aud,
-				theme
-				// enable_dark_theme,
-				// user_limit
+				theme,
+				enable_dark_theme,
+				user_limit
 			})
 		} catch (error) {
 			console.log('ERROR Flag feature', error)
