@@ -51,6 +51,8 @@ export async function load({ request }: RequestEvent) {
 		} catch (error) {
 			console.log('ERROR Flag feature', error)
 		}
+	} else {
+		console.log('No user logged in yet')
 	}
 
 	// const config = new Configuration({
