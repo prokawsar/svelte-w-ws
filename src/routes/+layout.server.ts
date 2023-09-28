@@ -1,4 +1,4 @@
-import { kindeAuthClient } from '@kinde-oss/kinde-sveltekit-sdk'
+import { kindeAuthClient, getHeaders } from '@kinde-oss/kinde-sveltekit-sdk'
 import type { SessionManager } from '@kinde-oss/kinde-typescript-sdk'
 import type { RequestEvent } from '@sveltejs/kit'
 
@@ -10,9 +10,6 @@ export async function load({ request }: RequestEvent) {
 	if (isAuthenticated) {
 		// userProfile = await kindeAuthClient.getUser(request as unknown as SessionManager)
 		userProfile = await kindeAuthClient.getUserProfile(request as unknown as SessionManager)
-		const getOrganization = await kindeAuthClient.getOrganization(
-			request as unknown as SessionManager
-		)
 		const userOrganizations = await kindeAuthClient.getUserOrganizations(
 			request as unknown as SessionManager
 		)
@@ -20,12 +17,29 @@ export async function load({ request }: RequestEvent) {
 			request as unknown as SessionManager,
 			'read:profile'
 		)
-
-		const permissions = await kindeAuthClient.getPermissions(request as unknown as SessionManager)
-		const getToken = await kindeAuthClient.getToken(request as unknown as SessionManager)
 		const aud = await kindeAuthClient.getClaim(request as unknown as SessionManager, 'aud')
+		const permissions = await kindeAuthClient.getPermissions(request as unknown as SessionManager)
+		const getOrganization = await kindeAuthClient.getOrganization(
+			request as unknown as SessionManager
+		)
+		const accessToken = await kindeAuthClient.getToken(request as unknown as SessionManager)
+		const headers = {
+			Accept: 'application/json',
+			Authorization: 'Bearer ' + accessToken
+		}
 
 		try {
+			// fetch(`https://prokawsar.kinde.com/api/v1/organizations/org_3c1bc91bc0f/users`, {
+			// 	method: 'GET',
+			// 	headers: headers
+			// })
+			// 	.then(function (res) {
+			// 		return res.json()
+			// 	})
+			// 	.then(function (body) {
+			// 		console.log(body)
+			// 	})
+
 			const theme = await kindeAuthClient.getFlag(request as unknown as SessionManager, 'theme')
 			const enable_dark_theme = await kindeAuthClient.getBooleanFlag(
 				request as unknown as SessionManager,
@@ -35,29 +49,32 @@ export async function load({ request }: RequestEvent) {
 				request as unknown as SessionManager,
 				'user_limit'
 			)
+			const app_version = await kindeAuthClient.getStringFlag(
+				request as unknown as SessionManager,
+				'app_version'
+			)
 
-			console.log({
+			let logs = {
 				userProfile,
 				getOrganization,
 				userOrganizations,
 				permission,
 				permissions,
-				getToken,
+				// accessToken,
 				aud,
 				theme,
 				enable_dark_theme,
-				user_limit
-			})
+				user_limit,
+				app_version
+			}
+
+			console.log(logs)
 		} catch (error) {
 			console.log('ERROR Flag feature', error)
 		}
 	} else {
 		console.log('No user logged in yet')
 	}
-
-	// const config = new Configuration({
-	//     basePath: KINDE_ISSUER_URL
-	// })
 
 	// const apiInstance = new UsersApi(config);
 
