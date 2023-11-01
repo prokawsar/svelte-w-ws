@@ -1,5 +1,4 @@
-import { kindeAuthClient, getHeaders } from '@kinde-oss/kinde-sveltekit-sdk'
-import type { SessionManager } from '@kinde-oss/kinde-typescript-sdk'
+import { kindeAuthClient, type SessionManager } from '@kinde-oss/kinde-sveltekit-sdk'
 import type { RequestEvent } from '@sveltejs/kit'
 
 export async function load({ request }: RequestEvent) {
@@ -10,9 +9,9 @@ export async function load({ request }: RequestEvent) {
 	if (isAuthenticated) {
 		// userProfile = await kindeAuthClient.getUser(request as unknown as SessionManager)
 		userProfile = await kindeAuthClient.getUserProfile(request as unknown as SessionManager)
-		const userOrganizations = await kindeAuthClient.getUserOrganizations(
-			request as unknown as SessionManager
-		)
+		// const userOrganizations = await kindeAuthClient.getUserOrganizations(
+		// 	request as unknown as SessionManager
+		// )
 		const permission = await kindeAuthClient.getPermission(
 			request as unknown as SessionManager,
 			'read:profile'
@@ -25,21 +24,24 @@ export async function load({ request }: RequestEvent) {
 		const accessToken = await kindeAuthClient.getToken(request as unknown as SessionManager)
 		const headers = {
 			Accept: 'application/json',
-			Authorization: 'Bearer ' + accessToken
+			Authorization: `Bearer ${accessToken}`
 		}
 
-		try {
-			// fetch(`https://prokawsar.kinde.com/api/v1/organizations/org_3c1bc91bc0f/users`, {
-			// 	method: 'GET',
-			// 	headers: headers
-			// })
-			// 	.then(function (res) {
-			// 		return res.json()
-			// 	})
-			// 	.then(function (body) {
-			// 		console.log(body)
-			// 	})
+		// let url = `https://prokawsar.kinde.com/api/v1/organizations/org_3c1bc91bc0f/users`;
+		let url = `https://prokawsar.kinde.com/api/v1/users`
 
+		try {
+			let orgName = await fetch(url, {
+				method: 'GET',
+				headers: headers
+			})
+				.then(function (res) {
+					return res.json()
+				})
+				.then(function (body) {
+					return body
+				})
+			console.log(url, orgName)
 			const theme = await kindeAuthClient.getFlag(request as unknown as SessionManager, 'theme')
 			const enable_dark_theme = await kindeAuthClient.getBooleanFlag(
 				request as unknown as SessionManager,
@@ -56,10 +58,10 @@ export async function load({ request }: RequestEvent) {
 
 			let logs = {
 				userProfile,
-				getOrganization,
-				userOrganizations,
+				// userOrganizations,
 				permission,
 				permissions,
+				getOrganization,
 				// accessToken,
 				aud,
 				theme,
