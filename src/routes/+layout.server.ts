@@ -33,35 +33,36 @@ export async function load({ request }: RequestEvent) {
 		const getOrganization = await kindeAuthClient.getOrganization(
 			request as unknown as SessionManager
 		)
-		const accessToken = await kindeAuthClient.getToken(request as unknown as SessionManager)
 
-		// const kindeManagementApi = createKindeServerClient(GrantType.CLIENT_CREDENTIALS, {
-		// 	clientId: KINDE_CLIENT_ID,
-		// 	clientSecret: KINDE_CLIENT_SECRET,
-		// 	authDomain: KINDE_ISSUER_URL,
-		// 	logoutRedirectURL: KINDE_REDIRECT_URL
-		// })
-		// const token = await kindeManagementApi.getToken(request as unknown as SessionManager)
-		// console.log('is token same: ', accessToken == token)
+		const accessToken = await kindeAuthClient.getToken(request as unknown as SessionManager)
+		const kindeManagementApi = createKindeServerClient(GrantType.CLIENT_CREDENTIALS, {
+			// hardcoded M2M type applications client id and secret
+			clientId: 'ee241ab6dcfa4cee94c0e79e2386b2a2',
+			clientSecret: 'Da7RurVjtNF9pmj3KZ2P68CE6bkdWEdNhDXP3KWJmHRxVsyO9u',
+			authDomain: KINDE_ISSUER_URL,
+			logoutRedirectURL: KINDE_REDIRECT_URL
+		})
+		const token = await kindeManagementApi.getToken(request as unknown as SessionManager)
+		console.log('is token same: ', accessToken == token) // this is showing true
 		const headers = {
 			Accept: 'application/json',
 			Authorization: `Bearer ${accessToken}`
 		}
-		// let url = `https://prokawsar.kinde.com/api/v1/organizations/org_3c1bc91bc0f/users`;
-		let url = `https://prokawsar.kinde.com/api/v1/users`
+		let url = `https://prokawsar.kinde.com/api/v1/organizations/org_3c1bc91bc0f/users`
+		// let url = `https://prokawsar.kinde.com/api/v1/users`
 
 		try {
-			// let orgName = await fetch(url, {
-			// 	method: 'GET',
-			// 	headers: headers
-			// })
-			// 	.then(function (res) {
-			// 		return res.json()
-			// 	})
-			// 	.then(function (body) {
-			// 		return body
-			// 	})
-
+			let users = await fetch(url, {
+				method: 'GET',
+				headers: headers
+			})
+				.then(function (res) {
+					return res.json()
+				})
+				.then(function (body) {
+					return body
+				})
+			console.log(users.errors)
 			// const config = await getConfiguration()
 			// const apiIns = new UsersApi(config)
 			// const users = await apiIns.getUsers()
@@ -86,33 +87,21 @@ export async function load({ request }: RequestEvent) {
 				permission,
 				permissions,
 				getOrganization,
-				accessToken,
+				// accessToken,
 				aud,
 				theme,
 				enable_dark_theme,
 				user_limit,
 				app_version
-				// users
 			}
 
-			// console.log(logs)
+			console.log(logs)
 		} catch (error) {
 			console.log('ERROR Flag feature', error)
 		}
 	} else {
 		console.log('No user logged in yet')
 	}
-
-	// const apiInstance = new UsersApi(config);
-
-	// const headers = await getHeaders();
-
-	// const users = await apiInstance.getUsers(undefined, {
-	//     headers: {
-	//         ...headers
-	//     }
-	// })
-	// console.log('users', users);
 
 	return {
 		isAuthenticated,
