@@ -37,7 +37,7 @@
 	<p class="font-bold text-3xl">
 		K<span class="uppercase text-lg">inde</span> A<span class="uppercase text-lg">uth</span>
 	</p>
-	<p class="text-sm text-gray-400">@kinde-oss/kinde-sveltekit-sdk v1.2.0</p>
+	<p class="text-sm text-gray-400">@kinde-oss/kinde-auth-sveltekit v1.2.2</p>
 
 	<div class="flex flex-row gap-3 items-center">
 		<span
