@@ -21,19 +21,13 @@
 		// 	}
 		// }
 	})
-
-	// const loginWithOrgCode = async (org_code: string) => {
-	// 	await kb.login({
-	// 		org_code
-	// 	})
-	// }
 </script>
 
 <svelte:head>
 	<title>SvelteKit with Kinde Auth implemented</title>
 </svelte:head>
 
-<div class="container mx-auto mt-20 flex flex-col items-center gap-5 justify-center">
+<div class="container mx-auto mt-20 flex flex-col items-center gap-5 justify-center w-2/4">
 	<p class="font-bold text-3xl">
 		K<span class="uppercase text-lg">inde</span> A<span class="uppercase text-lg">uth</span>
 	</p>
@@ -49,7 +43,7 @@
 		</p>
 	</div>
 
-	<div class="flex flex-col gap-5 items-center w-2/4">
+	<div class="flex flex-col gap-5 items-center w-full">
 		<div class="flex flex-row gap-3 w-full justify-center">
 			{#if data.isAuthenticated}
 				<Button
@@ -75,30 +69,36 @@
 				/>
 			{/if}
 		</div>
-
-		<div class="flex flex-row gap-3 w-full justify-center">
-			<Button
-				classes="w-full !outline-green-600"
-				text="Create org"
-				onClick={() => goto(`/api/auth/create_org?org_name=${org_name}`)}
-			/>
-			<Button
-				classes="w-full !outline-green-400"
-				text="Login \w org"
-				onClick={() => goto('/api/auth/login?org_code=org_3c1bc91bc0f')}
-			/>
-			{#if data.isAuthenticated}
-				<Button
-					classes="w-full !outline-red-500"
-					text="Logout \w org"
-					onClick={() => goto('/api/auth/logout?org_code=org_3c1bc91bc0f')}
-				/>
-			{/if}
-		</div>
 	</div>
 	<div class="flex w-full flex-row justify-center">
 		<p class="text-xl text-gray-500 uppercase my-5">
 			{data.userProfile?.given_name || 'Name'} - {data.userProfile?.email || 'Email'}
 		</p>
+	</div>
+
+	<p class="text-xl font-bold">Organization API</p>
+	<div class="flex w-full flex-row gap-3 justify-center">
+		<Button
+			classes="w-full !outline-green-600"
+			text="Create org"
+			onClick={() => goto(`/api/auth/create_org?org_name=${org_name}`)}
+		/>
+		<Button
+			classes="w-full !outline-green-400"
+			text="Login \w org"
+			onClick={() => goto('/api/auth/login?org_code=org_3c1bc91bc0f')}
+		/>
+		{#if data.isAuthenticated}
+			<Button
+				classes="w-full !outline-red-500"
+				text="Logout \w org"
+				onClick={() => goto('/api/auth/logout?org_code=org_3c1bc91bc0f')}
+			/>
+		{/if}
+	</div>
+
+	<p class="text-xl font-bold">User API</p>
+	<div class="flex w-full flex-row gap-3 justify-center">
+		<p>User</p>
 	</div>
 </div>

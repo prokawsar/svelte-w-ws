@@ -47,39 +47,40 @@ export async function load({ request }: RequestEvent) {
 			// User api
 			const userApi = new UsersApi(config)
 			const allUsers = await userApi.getUsers()
+			// console.log(allUsers)
+			// const createUser = await userApi.createUser({
+			// 	createUserRequest: {
+			// 		profile: {
+			// 			familyName: 'Fromapi 2'
+			// 		},
+			// 		identities: [
+			// 			{
+			// 				details: {
+			// 					email: 'fromapi2@gamil.com'
+			// 				}
+			// 			}
+			// 		]
+			// 	}
+			// })
 
-			const createUser = await userApi.createUser({
-				createUserRequest: {
-					profile: {
-						familyName: 'Fromapi 2'
-					},
-					identities: [
-						{
-							details: {
-								email: 'fromapi2@gamil.com'
-							}
-						}
-					]
-				}
-			})
-			console.log(createUser)
+			// console.log(createUser)
 			// Org api
 			const orgApi = new OrganizationsApi(config)
 			const orgs = await orgApi.getOrganization({
 				code: 'org_54e63867a9d6'
 			})
 			const allOrg = await orgApi.getOrganizations()
-			// console.log(allOrg)
+			// console.log(orgs)
 			// const createOrg = await orgApi.createOrganization({
 			// 	createOrganizationRequest: {
-			// 		name: 'create from api 2',
-			// 		handle: 'api-org-2'
+			// 		name: 'create from api 3',
+			// 		handle: 'api-org-4'
 			// 	}
 			// })
 			// console.log(createOrg)
 
 			// const delRes = await orgApi.deleteOrganization({
-			// 	orgCode: 'org_da196f16639ae'
+			// 	orgCode: createOrg.organization?.code || ''
 			// })
 			// console.log(delRes)
 
@@ -88,10 +89,11 @@ export async function load({ request }: RequestEvent) {
 			const allRoles = await roleInstance.getRoles()
 			const role_id = allRoles?.roles && allRoles?.roles[0].id
 			// console.log(allRoles)
-			// console.log(role_id)
+			console.log('Role id: ', role_id)
 			// const rolePermissions = await roleInstance.getRolePermission({
 			// 	roleId: role_id || ''
 			// })
+			// console.log(rolePermissions)
 
 			const theme = await kindeAuthClient.getFlag(request as unknown as SessionManager, 'theme')
 			const enable_dark_theme = await kindeAuthClient.getBooleanFlag(
